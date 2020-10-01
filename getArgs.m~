@@ -1,0 +1,8 @@
+function [h,m,ms] = getArgs(inputArg1,inputArg2)
+
+h = 20;
+m = 2.5;
+ms = 
+
+end
+
