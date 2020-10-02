@@ -6,7 +6,7 @@ h = 20;
 m = 2.5;
 ms = 1.5;
 ma = m - ms;
-Nm = 100;
+Nm = 10;
 Nt = 1000;
 disp('¬ведите номер пункта');
     while(state ~= GetArgsState.End)
