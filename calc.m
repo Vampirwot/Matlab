@@ -1,7 +1,11 @@
-function[] = calc(h, m, ms)
+function[t, F_plus] = calc(h, m, ms)
 
 zeta0 = 0;
 zeta = h;
+v = 299792450;
+u0 = 1;
+
+t0 = (zeta - zeta0)/v;
 t = 0:1e-11:t0+5e-7;
 t = t';
 F_plus = zeros(length(t), 1);

@@ -13,6 +13,7 @@ disp("Введите номер пункта");
                 fprintf("1) Использовать настройки по умолчанию\n");
                 fprintf("2) Изменить настройки по умолчанию\n");
                 choise = input("");
+                
                 if(choise == 1)
                     state = GetArgsState.End;
                 elseif(choise == 2)
