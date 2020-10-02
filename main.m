@@ -27,7 +27,7 @@ maxMs = 3*ms;
 Ma = 0:maxMa/Nm:maxMa;
 Ms = 0:maxMs/Nm:maxMs;
 
-[ma,ms] = calcMaMs(F_plus, Ma, Ms);
+[ma,ms] = calcMaMs(F_plus, Ma, Ms, h);
 fprintf('Полученный коэффициент поглощения - %.2f м^(-1)\n', ma)
 fprintf('Полученный коэффициент рассеяния - %.2f м^(-1)\n', ms)
 
