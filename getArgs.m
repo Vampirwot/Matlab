@@ -9,12 +9,12 @@ ma = m - ms;
 Nm = 100;
 Nt = 1000;
 
-disp("Введите номер пункта");
+disp('Введите номер пункта');
     while(state ~= GetArgsState.End)
         switch(state)
             case GetArgsState.Main
-                fprintf("1) Использовать настройки по умолчанию\n");
-                fprintf("2) Изменить настройки по умолчанию\n");
+                fprintf('1) Использовать настройки по умолчанию\n');
+                fprintf('2) Изменить настройки по умолчанию\n');
                 choise = input("");
                 
                 if(choise == 1)
@@ -22,7 +22,7 @@ disp("Введите номер пункта");
                 elseif(choise == 2)
                     state = GetArgsState.Change_Default_Settings;
                 else
-                    fprintf("Ошибка ввода. Попробуйте еще раз.\n");
+                    fprintf('Ошибка ввода. Попробуйте еще раз.\n');
                 end
                 
             case GetArgsState.Change_Default_Settings
