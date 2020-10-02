@@ -6,25 +6,65 @@ h = 20;
 m = 2.5;
 ms = 1.5;
 ma = m - ms;
-disp("Р’РІРµРґРёС‚Рµ РЅРѕРјРµСЂ РїСѓРЅРєС‚Р°");
+disp("Введите номер пункта");
     while(state ~= GetArgsState.End)
         switch(state)
             case GetArgsState.Main
-                disp("1) РСЃРїРѕР»СЊР·РѕРІР°С‚СЊ РЅР°СЃС‚СЂРѕР№РєРё РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ")
-                disp("2) РР·РјРµРЅРёС‚СЊ РЅР°СЃС‚СЂРѕР№РєРё РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ")
+                fprintf("1) Использовать настройки по умолчанию\n");
+                fprintf("2) Изменить настройки по умолчанию\n");
                 choise = input("");
                 if(choise == 1)
                     state = GetArgsState.End;
                 elseif(choise == 2)
-                    state = Change_Default_Settings;
+                    state = GetArgsState.Change_Default_Settings;
                 else
-                    disp("РћС€РёР±РєР° РІРІРѕРґР°. РџРѕРїСЂРѕР±СѓР№С‚Рµ РµС‰Рµ СЂР°Р·.")
+                    fprintf("Ошибка ввода. Попробуйте еще раз.\n");
                 end
                 
             case GetArgsState.Change_Default_Settings
-                
+                fprintf('\n');
+                fprintf('1) Изменить h: %.2f м\n', h);
+                fprintf('2) Изменить m: %.2f м^(-1) и ms: %.2f м^(-1)\n', m,ms);
+                fprintf('3) Изменить m: %.2f м^(-1) и ma: %.2f м^(-1)\n', m,ma);
+                fprintf('4) Изменить ms: %.2f м^(-1) и ma: %.2f м^(-1)\n', ms,ma);
+                fprintf('5) Готово\n')
+                choise = input("");
+                if(choise == 1)
+                    state = GetArgsState.Change_H;
+                elseif(choise == 2)
+                    state = GetArgsState.Change_M_Ms;
+                elseif(choise == 3)
+                    state = GetArgsState.Change_M_Ma;
+                elseif(choise == 4)
+                    state = GetArgsState.Change_Ms_Ma;
+                elseif(choise == 5)
+                    state = GetArgsState.End;
+                end
             case GetArgsState.Change_H
-                
+                fprintf('Введите h в м\n');
+                h = input("");
+                state = GetArgsState.Change_Default_Settings;
+            case GetArgsState.Change_M_Ms
+                fprintf('Введите m в м^(-1)\n');
+                m = input("");
+                fprintf('Введите ms в м^(-1)\n');
+                ms = input("");
+                ma = m - ms;
+                state = GetArgsState.Change_Default_Settings;
+            case GetArgsState.Change_M_Ma
+                fprintf('Введите m в м^(-1)\n');
+                m = input("");
+                fprintf('Введите ma в м^(-1)\n');
+                ma = input("");
+                ms = m - ma;
+                state = GetArgsState.Change_Default_Settings; 
+             case GetArgsState.Change_Ms_Ma
+                fprintf('Введите ms в м^(-1)\n');
+                ms = input("");
+                fprintf('Введите ma в м^(-1)\n');
+                ma = input("");
+                m = ms + ma;
+                state = GetArgsState.Change_Default_Settings;
         end
     end
 
