@@ -7,6 +7,8 @@ classdef GetArgsState
         Change_M_Ms,
         Change_M_Ma,
         Change_Ms_Ma,
+        Change_Nm,
+        Change_Nt,
         End
         
     end
