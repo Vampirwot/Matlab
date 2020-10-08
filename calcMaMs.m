@@ -1,18 +1,24 @@
-function[ma, ms] = calcMaMs(F, Ma, Ms, h)
+function[ma, ms] = calcMaMs(F, ma, ms, h, Nma, Nms, Tmax, Nt)
+
+maxMa = 3*ma;
+maxMs = 3*ms;
+
+dMa = maxMa/Nma;
+dMs = maxMs/Nms;
+
+Ma = dMa/2:dMa:maxMa - dMa/2;
+Ms = dMs/2:dMs:maxMs - dMs/2;
 
 ma = Ma(1);
 ms = Ms(1);
 min = intmax;
-stdFMas = zeros(length(Ma),length(Ms));
-
     for i = 1:length(Ma)
         for j = 1:length(Ms)
             M = Ma(i) + Ms(j);
-            [t, f] = calc(h, M, Ms(j));
+            [t, f] = calc(h, M, Ms(j), Tmax, Nt);
            
             stdF = std(f - F);
-            stdFMas(i,j) = stdF;
-           
+
             if(isnan(stdF))
                continue;
             end
@@ -24,6 +30,8 @@ stdFMas = zeros(length(Ma),length(Ms));
             end
         end
     end
-    figure(7)
-    surf(Ma,Ms,stdFMas);
+    
+disp(['Полученный коэффициент поглощения - ' num2str(ma, 2) ' 1/м'])
+disp(['Полученный коэффициент рассеяния - ' num2str(ms, 2) ' 1/м'])
+    
 end

@@ -1,4 +1,4 @@
-function[t, F_plus] = calc(h, m, ms)
+function[t, F_plus] = calc(h, m, ms, Tmax, Nt)
 
 %% Постоянные
 zeta0 = 0;
@@ -8,7 +8,7 @@ u0 = 1;
 
 %% Вычисление времени
 t0 = (zeta - zeta0)/v;
-t = 0:1e-11:t0+2e-7;
+t = 0:Tmax/(Nt - 1):Tmax;
 t = t';
 F_plus = zeros(length(t), 1);
  
