@@ -16,7 +16,7 @@ disp('Введите номер пункта');
                 disp('1) Использовать настройки по умолчанию');
                 disp('2) Изменить настройки по умолчанию');
                 choise = input('');
-                if(choise == 1)
+                if(isempty(choise) || choise == 1)
                     state = GetArgsState.End;
                 elseif(choise == 2)
                     state = GetArgsState.Change_Default_Settings;
