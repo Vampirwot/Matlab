@@ -14,26 +14,25 @@ disp('Введите номер пункта');
     while(state ~= GetArgsState.End)
         switch(state)
             case GetArgsState.Main
-                disp('1) Использовать настройки по умолчанию\n');
-                disp('2) Изменить настройки по умолчанию\n');
+                disp('1) Использовать настройки по умолчанию');
+                disp('2) Изменить настройки по умолчанию');
                 choise = input('');
                 if(choise == 1)
                     state = GetArgsState.End;
                 elseif(choise == 2)
                     state = GetArgsState.Change_Default_Settings;
                 else
-                    fprintf('Ошибка ввода. Попробуйте еще раз.\n');
+                    fprintf('Ошибка ввода. Попробуйте еще раз.');
                 end
             case GetArgsState.Change_Default_Settings
-                disp('\n');
-                disp(['1) Изменить h: %.2f м\n' num2str(h)]);
-                disp(['2) Изменить m: ' num2str(m) ' м^(-1) и ms: ' num2str(ms) ' м^(-1)\n']);
-                disp(['3) Изменить m: ' num2str(m) ' м^(-1) и ma: ' num2str(ma) ' м^(-1)\n']);
-                disp(['4) Изменить ms: ' num2str(ms) ' м^(-1) и ma: %.2f м^(-1)\n',num2str(ma)]);
-                disp(['5) Количество точек для ma: %.d штук\n', num2str(Nma)]);
-                disp(['6) Количество точек для ms: %.d штук\n', num2str(Nms)]);
-                disp(['7) Количество точек для t: %.d штук\n', num2str(Nt)]);
-                disp('8) Готово\n')
+                disp(['1) Изменить h: ' num2str(h, 2) ' 1/м']);
+                disp(['2) Изменить m: ' num2str(m) ' 1/м и ms: ' num2str(ms) ' 1/м']);
+                disp(['3) Изменить m: ' num2str(m) ' 1/м и ma: ' num2str(ma) ' 1/м']);
+                disp(['4) Изменить ms: ' num2str(ms) ' 1/м и ma: ' num2str(ma) ' 1/м']);
+                disp(['5) Количество точек для ma: ' num2str(Nma)]);
+                disp(['6) Количество точек для ms: ' num2str(Nms)]);
+                disp(['7) Количество точек для t: ' num2str(Nt)]);
+                disp('8) Готово')
                 choise = input('');
                 if(choise == 1)
                     state = GetArgsState.Change_H;
@@ -53,47 +52,47 @@ disp('Введите номер пункта');
                     state = GetArgsState.End;
                 end
             case GetArgsState.Change_H
-                disp('Введите h в м\n');
+                disp('Введите h в м');
                 h = input('');
                 state = GetArgsState.Change_Default_Settings;
             case GetArgsState.Change_M_Ms
-                disp('Введите m в м^(-1)\n');
+                disp('Введите m в 1/м');
                 m = input('');
-                disp('Введите ms в м^(-1)\n');
+                disp('Введите ms в 1/м');
                 ms = input('');
                 ma = m - ms;
                 state = GetArgsState.Change_Default_Settings;
             case GetArgsState.Change_M_Ma
-                disp('Введите m в м^(-1)\n');
+                disp('Введите m в 1/м');
                 m = input('');
-                disp('Введите ma в м^(-1)\n');
+                disp('Введите ma в 1/м');
                 ma = input('');
                 ms = m - ma;
                 state = GetArgsState.Change_Default_Settings; 
              case GetArgsState.Change_Ms_Ma
-                disp('Введите ms в м^(-1)\n');
+                disp('Введите ms в 1/м');
                 ms = input('');
-                disp('Введите ma в м^(-1)\n');
+                disp('Введите ma в 1/м');
                 ma = input('');
                 m = ms + ma;
                 state = GetArgsState.Change_Default_Settings;
              case GetArgsState.Change_Nms
-                disp('Введите количество точек для расчета ms\n');
+                disp('Введите количество точек для расчета ms');
                 Nms = input('');
                 state = GetArgsState.Change_Default_Settings;
              case GetArgsState.Change_Nma
-                disp('Введите количество точек для расчета ma\n');
+                disp('Введите количество точек для расчета ma');
                 Nma = input('');
                 state = GetArgsState.Change_Default_Settings;
              case GetArgsState.Change_Nt
-                disp('Введите количество точек для расчета t\n');
+                disp('Введите количество точек для расчета t');
                 Nt = input('');
                 state = GetArgsState.Change_Default_Settings;
         end
     end
     
 disp('Параметры:');
-disp(['Толщина среды - ' num2str(h, 2) ' 1/м'])
+disp(['Толщина среды - ' num2str(h, 2) ' м'])
 disp(['Коэффициент экстинкции - ' num2str(m, 2) ' 1/м'])
 disp(['Коэффициент рассеяния - ' num2str(ms, 2) ' 1/м'])
 disp(['Коэффициент поглощения - ' num2str(ma, 2) ' 1/м'])

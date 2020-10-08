@@ -3,12 +3,12 @@ clear all
 
 disp('Программа определения параметров рассеивающей среды по экспериментальному временному распределению');
 
-[h, m, ms, ma, Nm, Nt] = getArgs();
+[h, m, ms, ma, Nma, Nms, Nt, Tmax] = getArgs();
 
 
 disp('Вычисление экспериментального временного распределения импульса излучения');
 
-[t, F_plus] = calc(h, m, ms);
+[t, F_plus] = calc(h, m, ms, Tmax, Nt);
 
 figure(1)
 plot(t, F_plus)
@@ -16,19 +16,11 @@ grid on;
 
 %% Второй этап
 
-maxMa = 3*(m - ms);
-maxMs = 3*ms;
-
-Ma = 0:maxMa/Nm:maxMa;
-Ms = 0:maxMs/Nm:maxMs;
-
-[ma,ms] = calcMaMs(F_plus, Ma, Ms,h);
-disp(['Полученный коэффициент поглощения - ' num2str(ma, 2) ' 1/м'])
-disp(['Полученный коэффициент рассеяния - ' num2str(ms, 2) ' 1/м'])
+[ma,ms] = calcMaMs(F_plus, ma, ms, h, Nma, Nms, Tmax, Nt);
 
 m = ma + ms;
 
-[t, F_plusExp] = calc(h, m, ms); 
+[t, F_plusExp] = calc(h, m, ms, Tmax, Nt); 
 
 figure(2)
 plot(t, F_plusExp, 'r', t, F_plus, 'b')
