@@ -2,11 +2,11 @@ function [h,m,ms,ma,Nm,Nt] = getArgs()
 
 state = GetArgsState.Main;
 
-h = 20;
-m = 2.5;
-ms = 1.5;
+h = 0.005;
+m = 0.0011;
+ms = 0.001;
 ma = m - ms;
-Nm = 10;
+Nm = 20;
 Nt = 1000;
 disp('¬ведите номер пункта');
     while(state ~= GetArgsState.End)

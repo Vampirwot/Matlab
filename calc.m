@@ -8,7 +8,7 @@ u0 = 1;
 
 %% Вычисление времени
 t0 = (zeta - zeta0)/v;
-t = 0:1e-11:t0+2e-7;
+t = 0:1e-11:t0+5e-7;
 t = t';
 F_plus = zeros(length(t), 1);
  
