@@ -6,8 +6,8 @@ classdef ProgressBar
     end
     
      properties(Constant)
-       complete = '?';
-       incomplete = '?';
+       complete = '#';
+       incomplete = '-';
     end
     
     methods
@@ -26,7 +26,7 @@ classdef ProgressBar
            msgInCompleteM = repmat(obj.incomplete, 1, countInComplete);
            msgInComplete = sprintf('%s', msgInCompleteM);
            msgComplete = sprintf('%s', msgCompleteM);
-           msg = sprintf('%s%s %3.1f%%\n', msgComplete,msgInComplete,percentDone);
+           msg = sprintf('[%s%s %3.1f %%]\n', msgComplete,msgInComplete,percentDone);
            fprintf('%s%s',obj.reverseStr, msg);
            obj.reverseStr = repmat(sprintf('\b'), 1, length(msg));
         end

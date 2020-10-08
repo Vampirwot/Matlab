@@ -12,8 +12,13 @@ Ms = dMs/2:dMs:maxMs - dMs/2;
 ma = Ma(1);
 ms = Ms(1);
 min = intmax;
+
+progress = ProgressBar(length(Ma)* length(Ms));
+k = 0;
     for i = 1:length(Ma)
         for j = 1:length(Ms)
+            k=k+1;
+            progress = progress.print(k);
             M = Ma(i) + Ms(j);
             [t, f] = calc(h, M, Ms(j), Tmax, Nt);
            
