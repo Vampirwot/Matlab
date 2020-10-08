@@ -21,6 +21,7 @@ while true
    end
    Tmax = Tmax * 1.5;
 end
+disp('Вычисление окончено');
 disp(['Tmax: ' num2str(Tmax)]);
 disp(['F(Tmax): ' num2str(F_plus(index))]);
 end

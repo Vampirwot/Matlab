@@ -1,11 +1,11 @@
-function [h,m,ms,ma,Nma,Nms,Nt] = getArgs()
+function [h,m_exp,ms_exp,ma_exp,Nma,Nms,Nt] = getArgs()
 
 state = GetArgsState.Main;
 
 h = 0.005;
-m = 0.0011;
-ms = 0.001;
-ma = m - ms;
+m_exp = 0.0011;
+ms_exp = 0.001;
+ma_exp = m_exp - ms_exp;
 Nma = 20;
 Nms = 20;
 Nt = 1000;
@@ -25,9 +25,9 @@ disp('Введите номер пункта');
                 end
             case GetArgsState.Change_Default_Settings
                 disp(['1) Изменить h: ' num2str(h, 2) ' 1/м']);
-                disp(['2) Изменить m: ' num2str(m) ' 1/м и ms: ' num2str(ms) ' 1/м']);
-                disp(['3) Изменить m: ' num2str(m) ' 1/м и ma: ' num2str(ma) ' 1/м']);
-                disp(['4) Изменить ms: ' num2str(ms) ' 1/м и ma: ' num2str(ma) ' 1/м']);
+                disp(['2) Изменить m: ' num2str(m_exp) ' 1/м и ms: ' num2str(ms_exp) ' 1/м']);
+                disp(['3) Изменить m: ' num2str(m_exp) ' 1/м и ma: ' num2str(ma_exp) ' 1/м']);
+                disp(['4) Изменить ms: ' num2str(ms_exp) ' 1/м и ma: ' num2str(ma_exp) ' 1/м']);
                 disp(['5) Количество точек для ma: ' num2str(Nma)]);
                 disp(['6) Количество точек для ms: ' num2str(Nms)]);
                 disp(['7) Количество точек для t: ' num2str(Nt)]);
@@ -56,24 +56,24 @@ disp('Введите номер пункта');
                 state = GetArgsState.Change_Default_Settings;
             case GetArgsState.Change_M_Ms
                 disp('Введите m в 1/м');
-                m = input('');
+                m_exp = input('');
                 disp('Введите ms в 1/м');
-                ms = input('');
-                ma = m - ms;
+                ms_exp = input('');
+                ma_exp = m_exp - ms_exp;
                 state = GetArgsState.Change_Default_Settings;
             case GetArgsState.Change_M_Ma
                 disp('Введите m в 1/м');
-                m = input('');
+                m_exp = input('');
                 disp('Введите ma в 1/м');
-                ma = input('');
-                ms = m - ma;
+                ma_exp = input('');
+                ms_exp = m_exp - ma_exp;
                 state = GetArgsState.Change_Default_Settings; 
              case GetArgsState.Change_Ms_Ma
                 disp('Введите ms в 1/м');
-                ms = input('');
+                ms_exp = input('');
                 disp('Введите ma в 1/м');
-                ma = input('');
-                m = ms + ma;
+                ma_exp = input('');
+                m_exp = ms_exp + ma_exp;
                 state = GetArgsState.Change_Default_Settings;
              case GetArgsState.Change_Nms
                 disp('Введите количество точек для расчета ms');
@@ -95,9 +95,9 @@ disp('Введите номер пункта');
     disp('+-----------------+----------+--------------+');
 disp('Параметры:');
 disp(['Толщина среды - ' num2str(h, 2) ' м'])
-disp(['Коэффициент экстинкции - ' num2str(m, 2) ' 1/м'])
-disp(['Коэффициент рассеяния - ' num2str(ms, 2) ' 1/м'])
-disp(['Коэффициент поглощения - ' num2str(ma, 2) ' 1/м'])
+disp(['Коэффициент экстинкции - ' num2str(m_exp, 2) ' 1/м'])
+disp(['Коэффициент рассеяния - ' num2str(ms_exp, 2) ' 1/м'])
+disp(['Коэффициент поглощения - ' num2str(ma_exp, 2) ' 1/м'])
 disp(['Количество точек для ms - ' num2str(Nms)])
 disp(['Количество точек для ma - ' num2str(Nma)])
 disp(['Количество точек для t - ' num2str(Nt)])

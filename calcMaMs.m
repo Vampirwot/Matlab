@@ -1,7 +1,7 @@
-function[ma, ms] = calcMaMs(F, ma, ms, h, Nma, Nms, Tmax, Nt)
+function[ma_teor, ms_teor] = calcMaMs(F, ma_exp, ms_exp, h, Nma, Nms, Tmax, Nt)
 
-maxMa = 3*ma;
-maxMs = 3*ms;
+maxMa = 3*ma_exp;
+maxMs = 3*ms_exp;
 
 dMa = maxMa/Nma;
 dMs = maxMs/Nms;
@@ -30,8 +30,9 @@ min = intmax;
             end
         end
     end
-    
-disp(['Полученный коэффициент поглощения - ' num2str(ma, 2) ' 1/м'])
-disp(['Полученный коэффициент рассеяния - ' num2str(ms, 2) ' 1/м'])
+    ma_teor = ma;
+    ms_teor = ms;
+disp(['Полученный коэффициент поглощения - ' num2str(ma_teor, 2) ' 1/м'])
+disp(['Полученный коэффициент рассеяния - ' num2str(ms_teor, 2) ' 1/м'])
     
 end

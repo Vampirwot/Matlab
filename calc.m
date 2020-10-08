@@ -1,4 +1,4 @@
-function[t, F_plus] = calc(h, m, ms, Tmax, Nt)
+function[t, F_plus] = calc(h, m_exp, ms_exp, Tmax, Nt)
 
 %% Постоянные
 zeta0 = 0;
@@ -17,9 +17,9 @@ for i = 1:length(t)
     if (t(i) < t0)
         F_plus(i) = 0;
     else
-        F_plus(i) = u0*m*v*dirac(m*v*t(i)-m*(zeta - zeta0))*exp(-m*(zeta - zeta0)) ...
-        + u0*v*heaviside(v*t(i) - (zeta - zeta0))*(ms*(zeta - zeta0)/sqrt((v*t(i))^2 - (zeta - zeta0)^2)) ...
-        * besseli(1, ms*sqrt((v*t(i)).^2 - (zeta - zeta0)^2))*exp(-m*v*t(i));
+        F_plus(i) = u0*m_exp*v*dirac(m_exp*v*t(i)-m_exp*(zeta - zeta0))*exp(-m_exp*(zeta - zeta0)) ...
+        + u0*v*heaviside(v*t(i) - (zeta - zeta0))*(ms_exp*(zeta - zeta0)/sqrt((v*t(i))^2 - (zeta - zeta0)^2)) ...
+        * besseli(1, ms_exp*sqrt((v*t(i)).^2 - (zeta - zeta0)^2))*exp(-m_exp*v*t(i));
     end 
 end
 end
