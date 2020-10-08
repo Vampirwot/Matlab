@@ -3,15 +3,17 @@ clear all
 
 disp('Программа определения параметров рассеивающей среды по экспериментальному временному распределению');
 
-[h, m, ms, ma, Nma, Nms, Nt, Tmax] = getArgs();
+[h, m, ms, ma, Nma, Nms, Nt] = getArgs();
 
-disp('Вычисление экспериментального временного распределения импульса излучения');
+disp('Определение Tmax');
 [Tmax] = getTmax(h, m, ms);
+disp('Вычисление экспериментального временного распределения импульса излучения');
 [t, F_plus] = calc(h, m, ms, Tmax, Nt);
 
+[temp t1] = min(abs(t-Tmax));
 
 figure(1)
-plot(t, F_plus)
+plot(t, F_plus, 'r',Tmax, F_plus(t1), '*');
 grid on;
 
 %% Второй этап

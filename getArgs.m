@@ -1,4 +1,4 @@
-function [h,m,ms,ma,Nma,Nms,Nt,Tmax] = getArgs()
+function [h,m,ms,ma,Nma,Nms,Nt] = getArgs()
 
 state = GetArgsState.Main;
 
@@ -9,7 +9,6 @@ ma = m - ms;
 Nma = 20;
 Nms = 20;
 Nt = 1000;
-Tmax = 1e-6;
 disp('Введите номер пункта');
     while(state ~= GetArgsState.End)
         switch(state)
@@ -22,7 +21,7 @@ disp('Введите номер пункта');
                 elseif(choise == 2)
                     state = GetArgsState.Change_Default_Settings;
                 else
-                    fprintf('Ошибка ввода. Попробуйте еще раз.');
+                    disp('Ошибка ввода. Попробуйте еще раз.');
                 end
             case GetArgsState.Change_Default_Settings
                 disp(['1) Изменить h: ' num2str(h, 2) ' 1/м']);
@@ -90,7 +89,10 @@ disp('Введите номер пункта');
                 state = GetArgsState.Change_Default_Settings;
         end
     end
-    
+    disp('');
+    disp('+-----------------+----------+--------------+');
+    disp('| Параметр        | Значение | Ед.измерения |');
+    disp('+-----------------+----------+--------------+');
 disp('Параметры:');
 disp(['Толщина среды - ' num2str(h, 2) ' м'])
 disp(['Коэффициент экстинкции - ' num2str(m, 2) ' 1/м'])
