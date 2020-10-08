@@ -2,12 +2,12 @@ classdef ProgressBar
     
     properties
        max_step;
-       reverseStr = "";
+       reverseStr = '';
     end
     
      properties(Constant)
-       complete = "⬛";
-       incomplete = "⬜";
+       complete = '?';
+       incomplete = '?';
     end
     
     methods
@@ -18,7 +18,7 @@ classdef ProgressBar
         function obj = print(obj,current_step)
            percentDone = 100 * current_step / obj.max_step;
            if(percentDone > 100)
-               error("percentDone > 100");
+               error('percentDone > 100');
            end
            countComplete = floor(percentDone / 10);
            countInComplete = 10 - countComplete;
@@ -27,7 +27,7 @@ classdef ProgressBar
            msgInComplete = sprintf('%s', msgInCompleteM);
            msgComplete = sprintf('%s', msgCompleteM);
            msg = sprintf('%s%s %3.1f%%\n', msgComplete,msgInComplete,percentDone);
-           fprintf("%s%s",obj.reverseStr, msg);
+           fprintf('%s%s',obj.reverseStr, msg);
            obj.reverseStr = repmat(sprintf('\b'), 1, length(msg));
         end
     end
