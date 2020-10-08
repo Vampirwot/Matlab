@@ -8,7 +8,7 @@ ms_exp = 0.001;
 ma_exp = m_exp - ms_exp;
 Nma = 20;
 Nms = 20;
-Nt = 1000;
+Nt = 10000;
 disp('¬ведите номер пункта');
     while(state ~= GetArgsState.End)
         switch(state)
