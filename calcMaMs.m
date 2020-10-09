@@ -37,7 +37,15 @@ k = 0;
     end
     ma_teor = ma;
     ms_teor = ms;
-disp(['Полученный коэффициент поглощения - ' num2str(ma_teor, 2) ' 1/м'])
-disp(['Полученный коэффициент рассеяния - ' num2str(ms_teor, 2) ' 1/м'])
+
+delta_ma = abs(ma_teor - ma_exp);
+delta_ms = abs(ms_teor - ms_exp);
+
+
+disp(' ');
+printTable({'Параметр','Заданное значение','Полученное значение','Отклонение'},...
+            {'Коэффициент поглощения', num2str(ma_exp, '%.2e'),num2str(ma_teor, '%.2e'),num2str(delta_ma, '%.2e')},...
+            {'Коэффициент рассеяния',num2str(ms_exp, '%.2e'),num2str(ms_teor, '%.2e'),num2str(delta_ms, '%.2e')});
+disp(' ');
     
 end
