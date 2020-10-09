@@ -28,4 +28,5 @@ l.end();
 disp('Вычисление окончено');
 disp(['Tmax: ' num2str(Tmax)]);
 disp(['F(Tmax): ' num2str(F_plus(index))]);
+disp(' ');
 end
