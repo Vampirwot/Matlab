@@ -28,9 +28,9 @@ end
 l.end();
 [F_plus_max, ind] = max(F_plus);
 T_Fmax = t(ind);
-disp(['T_Fmax:' num2str(T_Fmax)]);
-disp(['Fmax:' num2str(F_plus_max)]);
-disp(['Tmax: ' num2str(Tmax)]);
-disp(['F(Tmax): ' num2str(F_plus(index))]);
+disp(['T_Fmax, с: ', num2str(T_Fmax, 2)]);
+disp(['Fmax, Дж/с: ', num2str(F_plus_max)]);
+disp(['Tmax, с: ', num2str(Tmax, 2)]);
+disp(['F(Tmax), Дж/с: ', num2str(F_plus(index))]);
 disp(' ');
 end

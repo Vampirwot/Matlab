@@ -33,7 +33,7 @@ m_teor = ma_teor + ms_teor;
 
 [t, F_plusExp] = calc(h, m_teor, ms_teor, Tmax, Nt); 
 
-figure(2)
+figure(3)
 title('Сравнение полученного теоретического временного распределения импульса излучения с экспериментальным');
 plot(t, F_plusExp, 'r', t, F_plus, 'b');
 xlabel('Время, с');

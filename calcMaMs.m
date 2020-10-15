@@ -3,6 +3,9 @@ function[ma_teor, ms_teor] = calcMaMs(F, ma_exp, ms_exp, h, Nma, Nms, Tmax, Nt)
 maxMa = 3*ma_exp;
 maxMs = 3*ms_exp;
 
+disp(['Максимальное Ma, 1/м: ', num2str(maxMa)]);
+disp(['Максимальное Ms, 1/м: ', num2str(maxMs)]);
+
 dMa = maxMa/Nma;
 dMs = maxMs/Nms;
 
@@ -14,6 +17,7 @@ ms = Ms(1);
 min = intmax;
 
 progress = ProgressBar(length(Ma)* length(Ms));
+quadr = zeros(length(Ma), length(Ms));
 k = 0;
     for i = 1:length(Ma)
         for j = 1:length(Ms)
@@ -23,6 +27,7 @@ k = 0;
             [t, f] = calc(h, M, Ms(j), Tmax, Nt);
            
             stdF = std(f - F);
+            quadr(i, j) = stdF;
 
             if(isnan(stdF))
                continue;
@@ -40,6 +45,10 @@ k = 0;
 
 delta_ma = abs(ma_teor - ma_exp);
 delta_ms = abs(ms_teor - ms_exp);
+
+figure(2)
+surf(Ma, Ms, quadr)
+grid on;
 
 disp(' ');
 disp('Сравнение полученных параметров в соответствии с заданными');
