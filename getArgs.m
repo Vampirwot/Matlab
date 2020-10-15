@@ -1,4 +1,4 @@
-function [h,m_exp,ms_exp,ma_exp,Nma,Nms,Nt] = getArgs()
+function [h,m_exp,ms_exp,ma_exp,Nma,Nms,Nt,ratioF] = getArgs()
 
 state = GetArgsState.Main;
 
@@ -9,6 +9,7 @@ ma_exp = m_exp - ms_exp;
 Nma = 20;
 Nms = 20;
 Nt = 1000;
+ratioF = 100;
     while(state ~= GetArgsState.End)
         switch(state)
             case GetArgsState.Main
@@ -30,7 +31,8 @@ Nt = 1000;
                 disp(['5) Количество точек для ma: ' num2str(Nma)]);
                 disp(['6) Количество точек для ms: ' num2str(Nms)]);
                 disp(['7) Количество точек для t: ' num2str(Nt)]);
-                disp('8) Готово')
+                disp(['8) Отношение Fmax/F(Tmax): ' num2str(ratioF)]);
+                disp('9) Готово');
                 choise = input('');
                 if(choise == 1)
                     state = GetArgsState.Change_H;
@@ -47,6 +49,8 @@ Nt = 1000;
                 elseif(choise == 7)
                     state = GetArgsState.Change_Nt;
                 elseif(choise == 8)
+                    state = GetArgsState.Change_ratioF;    
+                elseif(choise == 9)
                     state = GetArgsState.End;
                 end
             case GetArgsState.Change_H
@@ -86,19 +90,25 @@ Nt = 1000;
                 disp('Введите количество точек для расчета t');
                 Nt = input('');
                 state = GetArgsState.Change_Default_Settings;
+             case GetArgsState.Change_ratioF
+                disp('Введите отношение Fmax/F(Tmax)');
+                ratioF = input('');
+                state = GetArgsState.Change_Default_Settings;   
         end
     end
+ disp('Исходные данные');   
  if(getVersion()<2016)
      disp('+----------------------------------------------+');
      disp(['| Параметр                      | ' 'Значение     |']);
      disp('+----------------------------------------------+');
-     disp([' Толщина среды                    ',num2str(h, '%10.2e') ' м ']);
-     disp([' Коэффициент экстинкции           ',num2str(m_exp, '%-8.2e') ' 1/м ']);
-     disp([' Коэффициент рассеяния            ',num2str(ms_exp, '%-8.2e') ' 1/м ']);
-     disp([' Коэффициент поглощения           ',num2str(ma_exp, '%-8.2e') ' 1/м ']);
+     disp([' Толщина среды, м                 ',num2str(h, '%10.2e') ' ']);
+     disp([' Коэффициент экстинкции, 1/м      ',num2str(m_exp, '%-8.2e') ' ']);
+     disp([' Коэффициент рассеяния, 1/м       ',num2str(ms_exp, '%-8.2e') ' ']);
+     disp([' Коэффициент поглощения, 1/м      ',num2str(ma_exp, '%-8.2e') ' ']);
      disp([' Количество точек для ms          ',num2str(Nms,'%-8.2u') ' ']);
      disp([' Количество точек для ma          ',num2str(Nma,'%-8.2u') ' ']);
      disp([' Количество точек для t           ',num2str(Nt,'% 8u') ' ']);
+     disp([' Отношение Fmax/F(Tmax)           ',num2str(ratioF) ' ']);
      disp('+----------------------------------------------+');
  else
     printTable(...
@@ -109,7 +119,8 @@ Nt = 1000;
         {'Коэффициент поглощения',strcat(num2str(ma_exp, 2),' 1/м')},...
         {'Количество точек для ms',num2str(Nms)},...
         {'Количество точек для ma', num2str(Nma)},...
-        {'Количество точек для t',num2str(Nt)});
+        {'Количество точек для t',num2str(Nt)},...
+        {'Отношение Fmax/F(Tmax)',num2str(ratioF)})
  end
     
 end

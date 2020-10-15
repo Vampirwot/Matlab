@@ -10,6 +10,7 @@ classdef GetArgsState
         Change_Nms,
         Change_Nma,
         Change_Nt,
+        Change_ratioF,
         End
         
     end
