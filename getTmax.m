@@ -1,11 +1,11 @@
-function [Tmax] = getTmax(h, m, ms, ratioF)
+function [i, Tmax] = getTmax(h, m, ms, ratioF)
 
-Tmax = 1e-6;
+Tmax = 1e-10;
 Nt = 1000;
 l = LoadBar('Поиск T_Fmax, Fmax, Tmax и F(Tmax)');
 while true
     l = l.nextStep();
-    [t, F_plus] = calc(h, m, ms, Tmax, Nt);
+    [t, i, F_plus] = calc(h, m, ms, Tmax, Nt);
     [F_plus_max, ind] = max(F_plus);
     T_Fmax = t(ind);
     if(F_plus_max ~= F_plus(end))
@@ -17,7 +17,7 @@ end
 while true
    l = l.nextStep();
    F_Tmax = F_plus_max / ratioF;
-   [t, F_plus] = calc(h, m, ms, Tmax, Nt);
+   [t, i, F_plus] = calc(h, m, ms, Tmax, Nt);
    if (F_plus(end) < F_Tmax)
        [tmp index] = min(abs(F_plus-F_Tmax));
        Tmax = t(index);

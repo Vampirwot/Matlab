@@ -1,4 +1,4 @@
-function[t, F_plus] = calc(h, m_exp, ms_exp, Tmax, Nt)
+function[t, i, F_plus] = calc(h, m_exp, ms_exp, Tmax, Nt)
 
 %% Постоянные
 zeta0 = 0;
@@ -14,6 +14,7 @@ F_plus = zeros(length(t), 1);
  
 %% Вычисление экспериментального временного распределения импульса излучения
 for i = 1:length(t)
+    i
     if (t(i) < t0)
         F_plus(i) = 0;
     else

@@ -1,15 +1,31 @@
-function [h,m_exp,ms_exp,ma_exp,Nma,Nms,Nt, ratioF] = getArgs()
+function [h,m_exp,ms_exp,ma_exp,Nma,Nms,Nt,ratioF,maxMa,maxMs,dMa,dMs] = getArgs()
 
 state = GetArgsState.Main;
 
-h = 0.005;
-m_exp = 0.0011;
-ms_exp = 0.001;
-ma_exp = m_exp - ms_exp;
-Nma = 20;
-Nms = 20;
-Nt = 1000;
-ratioF = 100;
+%% Параметры эксперимента
+
+h = 0.005;                  %Толщина слоя, м
+Nt = 1000;                  %Количество точек временного распределения
+
+%% Параметры экспериментального временного распределения
+
+ma_exp = 1000;              %Коэффициент поглощения, 1/м
+ms_exp = 3000;              %Коэффициент рассеяния, 1/м
+m_exp = ma_exp + ms_exp;    %Коэффициент экстинкции, 1/м
+ratioF = 100;               %Отношение Fmax / F(Tmax)
+
+%% Параметры определения характеристик рассеивающей среды
+
+Nma = 20;                   %Количество точек по ma
+Nms = 20;                   %Количество точек по ms
+
+maxMa = 3*ma_exp;           %Максимальное ma
+maxMs = 3*ms_exp;           %%Максимальное ms
+
+% Размер ячейки
+dMa = maxMa/Nma;            
+dMs = maxMs/Nms;
+
     while(state ~= GetArgsState.End)
         switch(state)
             case GetArgsState.Main
