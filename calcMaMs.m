@@ -1,13 +1,4 @@
-function[ma_teor, ms_teor] = calcMaMs(F, ma_exp, ms_exp, h, Nma, Nms, Tmax, Nt)
-
-maxMa = 3*ma_exp;
-maxMs = 3*ms_exp;
-
-disp(['Максимальное Ma, 1/м: ', num2str(maxMa)]);
-disp(['Максимальное Ms, 1/м: ', num2str(maxMs)]);
-
-dMa = maxMa/Nma;
-dMs = maxMs/Nms;
+function[ma_teor, ms_teor] = calcMaMs(F, ma_exp, ms_exp, h, Tmax, Nt, maxMa, maxMs, dMa, dMs)
 
 Ma = dMa/2:dMa:maxMa - dMa/2;
 Ms = dMs/2:dMs:maxMs - dMs/2;
@@ -48,22 +39,12 @@ delta_ms = abs(ms_teor - ms_exp);
 
 figure(2)
 surf(Ma, Ms, quadr)
+title('Зависимость среднеквадратическое отклонение от коэффициентов поглощения и рассеяния')
+xlabel('Коэффициент поглощения, 1/м')
+ylabel('Коэффициент рассеяния, 1/м')
+zlabel('Среднеквадратическое отколонение, Дж/с')
 grid on;
 
-disp(' ');
-disp('Сравнение полученных параметров в соответствии с заданными');
-if(getVersion()<2016)
-    disp('+-----------------------------------------------------------------------------------------------------+');
-    disp(['| Параметр                 '    '   | Заданное значение   ' '| Полученное значение  ' '| Отклонение    ' '| Точность |'])
-    disp('+-----------------------------------------------------------------------------------------------------+');
-    disp([' Коэффициент поглощения, 1/м    '  num2str(ma_exp, '%8.2e') '              '  num2str(ma_teor, '%8.2e') '               '  num2str(delta_ma, '%8.2e') '        '   num2str(dMa, '%8.2e') '    ']);
-    disp([' Коэффициент рассеяния, 1/м     '  num2str(ms_exp, '%8.2e') '              '  num2str(ms_teor, '%8.2e') '               '  num2str(delta_ms, '%8.2e') '        '   num2str(dMs, '%8.2e') '    ']);
-    disp('+-----------------------------------------------------------------------------------------------------+');
-else
-printTable({'Параметр','Заданное значение','Полученное значение','Отклонение'},...
-            {'Коэффициент поглощения', strcat(num2str(ma_exp, '%.2e'),' 1/м'),strcat(num2str(ma_teor, '%.2e'),' 1/м'),strcat(num2str(delta_ma, '%.2e'),' 1/м')},...
-            {'Коэффициент рассеяния',strcat(num2str(ms_exp, '%.2e'),' 1/м'),strcat(num2str(ms_teor, '%.2e'),' 1/м'),strcat(num2str(delta_ms, '%.2e'),' 1/м')});
-end
-disp(' ');
+vivod(ma_exp, ms_exp, ma_teor, ms_teor, delta_ma, delta_ms, dMa, dMs);
     
 end
