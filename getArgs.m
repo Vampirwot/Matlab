@@ -16,8 +16,8 @@ ratioF = 100;               %Отношение Fmax / F(Tmax)
 
 %% Параметры определения характеристик рассеивающей среды
 
-Nma = 20;                   %Количество точек по ma
-Nms = 20;                   %Количество точек по ms
+Nma = 5;                   %Количество точек по ma
+Nms = 5;                   %Количество точек по ms
 
 maxMa = 3*ma_exp;           %Максимальное ma
 maxMs = 3*ms_exp;           %%Максимальное ms
@@ -40,59 +40,43 @@ dMs = maxMs/Nms;
                 end
             case GetArgsState.Change_Default_Settings
                 disp('Введите номер пункта');
-                disp(['1) Изменить h: ' num2str(h, 2) ' м']);
-                disp(['2) Изменить m: ' num2str(m_exp) ' 1/м и ms: ' num2str(ms_exp) ' 1/м']);
-                disp(['3) Изменить m: ' num2str(m_exp) ' 1/м и ma: ' num2str(ma_exp) ' 1/м']);
-                disp(['4) Изменить ms: ' num2str(ms_exp) ' 1/м и ma: ' num2str(ma_exp) ' 1/м']);
-                disp(['5) Количество точек для ma: ' num2str(Nma)]);
-                disp(['6) Количество точек для ms: ' num2str(Nms)]);
-                disp(['7) Количество точек для t: ' num2str(Nt)]);
-                disp(['8) Отношение Fmax/F(Tmax): ' num2str(ratioF)]);
-                disp('9) Готово');
+                disp(['1) Изменить h: ' num2str(h * 1e3, 2) ' мм']);
+                disp(['2) Изменить ms: ' num2str(ms_exp / 1e3) ' 1/мм и ma: ' num2str(ma_exp / 1e3) ' 1/мм']);
+                disp(['3) Количество точек для ma: ' num2str(Nma)]);
+                disp(['4) Количество точек для ms: ' num2str(Nms)]);
+                disp(['5) Количество точек для t: ' num2str(Nt)]);
+                disp(['6) Отношение Fmax/F(Tmax): ' num2str(ratioF)]);
+                disp('7) Готово');
                 choise = input('');
                 if(choise == 1)
                     state = GetArgsState.Change_H;
                 elseif(choise == 2)
-                    state = GetArgsState.Change_M_Ms;
-                elseif(choise == 3)
-                    state = GetArgsState.Change_M_Ma;
-                elseif(choise == 4)
                     state = GetArgsState.Change_Ms_Ma;
-                elseif(choise == 5)
+                elseif(choise == 3)
                     state = GetArgsState.Change_Nma;
-                elseif(choise == 6)
+                elseif(choise == 4)
                     state = GetArgsState.Change_Nms;
-                elseif(choise == 7)
+                elseif(choise == 5)
                     state = GetArgsState.Change_Nt;
-                elseif(choise == 8)
+                elseif(choise == 6)
                     state = GetArgsState.Change_ratioF;    
-                elseif(choise == 9)
+                elseif(choise == 7)
                     state = GetArgsState.End;
                 end
             case GetArgsState.Change_H
                 disp('Введите h в мм');
                 h = input('') / 1e3;
-                state = GetArgsState.Change_Default_Settings;
-            case GetArgsState.Change_M_Ms
-                disp('Введите m в 1/мм');
-                m_exp = input('') / 1e3;
-                disp('Введите ms в 1/мм');
-                ms_exp = input('') / 1e3;
-                ma_exp = m_exp - ms_exp;
-                state = GetArgsState.Change_Default_Settings;
-            case GetArgsState.Change_M_Ma
-                disp('Введите m в 1/мм');
-                m_exp = input('') / 1e3;
-                disp('Введите ma в 1/мм');
-                ma_exp = input('') / 1e3;
-                ms_exp = m_exp - ma_exp;
                 state = GetArgsState.Change_Default_Settings; 
              case GetArgsState.Change_Ms_Ma
                 disp('Введите ms в 1/мм');
-                ms_exp = input('') / 1e3;
+                ms_exp = input('') * 1e3;
                 disp('Введите ma в 1/мм');
-                ma_exp = input('') / 1e3;
+                ma_exp = input('') * 1e3;
                 m_exp = ms_exp + ma_exp;
+                maxMa = 3*ma_exp;    
+                maxMs = 3*ms_exp;           
+                dMa = maxMa/Nma;            
+                dMs = maxMs/Nms;
                 state = GetArgsState.Change_Default_Settings;
              case GetArgsState.Change_Nms
                 disp('Введите количество точек для расчета ms');
@@ -112,31 +96,5 @@ dMs = maxMs/Nms;
                 state = GetArgsState.Change_Default_Settings;   
         end
     end
- disp('Исходные данные');   
- if(getVersion()<2016)
-     disp('+----------------------------------------------+');
-     disp(['| Параметр                      | ' 'Значение     |']);
-     disp('+----------------------------------------------+');
-     disp([' Толщина среды, м                 ',num2str(h, '%10.2e') ' ']);
-     disp([' Коэффициент экстинкции, 1/м      ',num2str(m_exp, '%-8.2e') ' ']);
-     disp([' Коэффициент рассеяния, 1/м       ',num2str(ms_exp, '%-8.2e') ' ']);
-     disp([' Коэффициент поглощения, 1/м      ',num2str(ma_exp, '%-8.2e') ' ']);
-     disp([' Количество точек для ms          ',num2str(Nms,'%-8.2u') ' ']);
-     disp([' Количество точек для ma          ',num2str(Nma,'%-8.2u') ' ']);
-     disp([' Количество точек для t           ',num2str(Nt,'% 8u') ' ']);
-     disp([' Отношение Fmax/F(Tmax)           ',num2str(ratioF) ' ']);
-     disp('+----------------------------------------------+');
- else
-    printTable(...
-        {'Параметр','Значение'},...
-        {'Толщина среды',strcat(num2str(h, 2),' м')},...
-        {'Коэффициент экстинкции',strcat( num2str(m_exp, 2),' 1/м')},...
-        {'Коэффициент рассеяния',strcat(num2str(ms_exp, 2),' 1/м')},...
-        {'Коэффициент поглощения',strcat(num2str(ma_exp, 2),' 1/м')},...
-        {'Количество точек для ms',num2str(Nms)},...
-        {'Количество точек для ma', num2str(Nma)},...
-        {'Количество точек для t',num2str(Nt)},...
-        {'Отношение Fmax/F(Tmax)',num2str(ratioF)})
- end
-    
+ishod(h, m_exp, ms_exp, ma_exp, Nma, Nms, Nt, ratioF, maxMa, maxMs, dMa, dMs); 
 end
