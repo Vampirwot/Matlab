@@ -39,10 +39,10 @@ delta_ms = abs(ms_teor - ms_exp);
 
 figure(2)
 surf(Ma, Ms, quadr)
-title('Зависимость среднеквадратическое отклонение от коэффициентов поглощения и рассеяния')
+title('Квадратичный функционал')
 xlabel('Коэффициент поглощения, 1/м')
 ylabel('Коэффициент рассеяния, 1/м')
-zlabel('Среднеквадратическое отколонение, Дж/с')
+zlabel('Квадратичный функционал, Вт')
 grid on;
 
 vivod(ma_exp, ms_exp, ma_teor, ms_teor, delta_ma, delta_ms, dMa, dMs);
