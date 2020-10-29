@@ -16,8 +16,8 @@ ratioF = 100;               %Отношение Fmax / F(Tmax)
 
 %% Параметры определения характеристик рассеивающей среды
 
-Nma = 5;                   %Количество точек по ma
-Nms = 5;                   %Количество точек по ms
+Nma = 100;                   %Количество точек по ma
+Nms = 100;                   %Количество точек по ms
 
 maxMa = 3*ma_exp;           %Максимальное ma
 maxMs = 3*ms_exp;           %%Максимальное ms
@@ -29,7 +29,7 @@ dMs = maxMs/Nms;
     while(state ~= GetArgsState.End)
         switch(state)
             case GetArgsState.Main
-                disp('Использовать настройки по умолчанию? y/n');
+                disp('Использовать параметры по умолчанию? y/n');
                 choise = input('','s');
                 if(isempty(choise) || choise == 'y')
                     state = GetArgsState.End;
