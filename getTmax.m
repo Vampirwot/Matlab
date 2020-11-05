@@ -1,15 +1,13 @@
-function [Tmax] = getTmax(h, m, ms, ratioF)
+function [Tmax] = getTmax(h, m, ms, ratioF,Nt)
 
 Tmax = 1e-11;
-Nt = 1000;
-disp('Поиск максимума экспериментального временного распределения Fmax,');
-disp('времени максимума T_Fmax, правой границы экспериментального ')
-l = LoadBar('временного распределения F(Tmax) и её времени Tmax');
+disp('Поиск Fmax экспериментального временного распределения F(t),');
+l = LoadBar('времени пика T_peak, максимального времени Tmax и F(Tmax)');
 while true
     l = l.nextStep();
     [t, F_plus] = calc(h, m, ms, Tmax, Nt);
     [F_plus_max, ind] = max(F_plus);
-    T_Fmax = t(ind);
+    T_peak = t(ind);
     if(F_plus_max ~= F_plus(end))
        break 
     end
@@ -29,11 +27,11 @@ while true
 end
 l.end();
 [F_plus_max, ind] = max(F_plus);
-T_Fmax = t(ind);
-disp(['T_Fmax, пс: ', num2str(T_Fmax * 1e11, '%.2f')]);
-disp(['Fmax, Вт: ', num2str(F_plus_max, '%.2f')]);
-disp(['Tmax, пс: ', num2str(Tmax * 1e11, '%.2f')]);
-disp(['F(Tmax), Вт: ', num2str(F_plus(index), '%.2f')]);
-disp(['Фактическое отношение Fmax/F(Tmax): ', num2str(F_plus_max/F_plus(index), '%.2f')]);
+T_peak = t(ind);
+disp(['T_peak = ' num2str(T_peak * 1e11, '%.2f') ' пс']);
+disp(['Fmax = ' num2str(F_plus_max, '%.2f') ' Вт']);
+disp(['Tmax = ' num2str(Tmax * 1e11, '%.2f') ' пс']);
+disp(['F(Tmax) = ' num2str(F_plus(index), '%.2f') ' Вт']);
+disp(['Фактическое отношение Fmax/F(Tmax) = ' num2str(F_plus_max/F_plus(index), '%.2f')]);
 disp(' ');
 end

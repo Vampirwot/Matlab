@@ -9,7 +9,7 @@ disp('Исходные экспериментальные параметры');
      disp([' Коэффициент экстинкции m, 1/мм              ',num2str(m_exp / 1e3) ' ']);
      disp([' Количество точек для ms Nma                 ',num2str(Nms) ' ']);
      disp([' Количество точек для ma Nms                 ',num2str(Nma) ' ']);
-     disp([' Количество точек для t Nt                   ',num2str(Nt) ' ']);
+     disp([' Количество точек по времени Nt              ',num2str(Nt) ' ']);
      disp([' Отношение Fmax/F(Tmax)                      ',num2str(ratioF) ' ']);
      disp([' Максимальное ma, 1/мм                       ',num2str(maxMa / 1e3) ' ']);
      disp([' Максимальное ms, 1/мм                       ',num2str(maxMs / 1e3) ' ']);

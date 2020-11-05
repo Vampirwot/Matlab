@@ -9,6 +9,7 @@ min = intmax;
 
 progress = ProgressBar(length(Ma)* length(Ms));
 quadr = zeros(length(Ma), length(Ms));
+quadr_n = zeros(length(Ma), length(Ms));
 k = 0;
     for i = 1:length(Ma)
         for j = 1:length(Ms)
@@ -18,14 +19,15 @@ k = 0;
             [t, f] = calc(h, M, Ms(j), Tmax, Nt);
            
             stdF = std(f - F);
+            quadr_n(i, j) = sum((f - F).^2); 
             quadr(i, j) = stdF;
 
             if(isnan(stdF))
                continue;
             end
            
-            if min > stdF
-                min = stdF;
+            if min > stdF%% quadr_n(i, j)%%stdF
+                min = stdF; %%quadr_n(i, j);%%stdF;
                 ma = Ma(i);
                 ms = Ms(i);
             end
@@ -38,10 +40,10 @@ delta_ma = abs(ma_teor - ma_exp);
 delta_ms = abs(ms_teor - ms_exp);
 
 figure(2)
-surf(Ma, Ms, quadr)
+surf(Ma/1000, Ms/1000, quadr_n)
 title('Квадратичный функционал')
-xlabel('Коэффициент поглощения, 1/м')
-ylabel('Коэффициент рассеяния, 1/м')
+xlabel('Коэффициент поглощения, 1/мм')
+ylabel('Коэффициент рассеяния, 1/мм')
 zlabel('Квадратичный функционал, Вт')
 grid on;
 
