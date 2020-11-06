@@ -8,7 +8,8 @@ u0 = 1;
 
 %% Вычисление времени
 t0 = (zeta - zeta0)/v;
-t = 0:Tmax/(Nt - 1):Tmax;
+dt=Tmax/(Nt - 1);
+t = 0:dt:Tmax;
 t = t';
 F = zeros(length(t), 1);
  
@@ -23,9 +24,12 @@ for i = 1:length(t)
 %         F(i) = u0*m_exp*v*exp(-m_exp*(zeta - zeta0)) ...
 %         + u0*v*(ms_exp*(zeta - zeta0)/sqrt((v*t(i))^2 - (zeta - zeta0)^2)) ...
 %         * besseli(1, ms_exp*sqrt((v*t(i)).^2 - (zeta - zeta0)^2))*exp(-m_exp*v*t(i));
-         F(i) = u0*m_exp*v*dirac(m_exp*v*t(i)-m_exp*(zeta - zeta0))*exp(-m_exp*(zeta - zeta0)) ...
-         + u0*v*(ms_exp*(zeta - zeta0)/sqrt((v*t(i))^2 - (zeta - zeta0)^2)) ...
-         * besseli(1, ms_exp*sqrt((v*t(i)).^2 - (zeta - zeta0)^2))*exp(-m_exp*v*t(i));
+         F0= u0*m_exp*v*dirac(m_exp*v*t(i)-m_exp*(zeta - zeta0))*exp(-m_exp*(zeta - zeta0));
+         F1=u0*v*(ms_exp*(zeta - zeta0)/sqrt((v*t(i))^2 - (zeta - zeta0)^2));
+         F2=besseli(1, ms_exp*sqrt((v*t(i)).^2 - (zeta - zeta0)^2))*exp(-m_exp*v*t(i));
+         F(i) = F1*F2;
     end 
 end
+
+
 end
