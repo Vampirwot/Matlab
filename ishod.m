@@ -1,9 +1,9 @@
-function [] = ishod(h, m_exp, ms_exp, ma_exp, Nma, Nms, Nt, ratioF, maxMa, maxMs, dMa, dMs)
-disp('Исходные экспериментальные параметры');   
+function [] = ishod(h, m_exp, ms_exp, ma_exp, Nma, Nms, Nt, ratioF, maxMa, maxMs, dMa, dMs, n) 
      disp('+----------------------------------------------------------+');
      disp(['| Параметр                                  | ' 'Значение     |']);
      disp('+----------------------------------------------------------+');
      disp([' Толщина среды h, мм                         ',num2str(h * 1e3) ' ']);
+     disp([' Показатель преломления n                    ',num2str(n) ' ']);
      disp([' Коэффициент поглощения ma, 1/мм             ',num2str(ma_exp  / 1e3) ' ']);
      disp([' Коэффициент рассеяния ms, 1/мм              ',num2str(ms_exp  / 1e3) ' ']);
      disp([' Коэффициент экстинкции m, 1/мм              ',num2str(m_exp / 1e3) ' ']);

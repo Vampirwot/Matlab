@@ -1,11 +1,11 @@
-function [Tmax] = getTmax(h, m, ms, ratioF,Nt)
+function [Tmax] = getTmax(h, m, ms, ratioF, Nt, n)
 
 Tmax = 1e-11;
 disp('ѕоиск Fmax экспериментального временного распределени€ F(t),');
 l = LoadBar('времени пика T_peak, максимального времени Tmax и F(Tmax)');
 while true
     l = l.nextStep();
-    [t, F_plus] = calc(h, m, ms, Tmax, Nt);
+    [t, F_plus] = calc(0, h, m, ms, Tmax, Nt, n);
     [F_plus_max, ind] = max(F_plus);
     T_peak = t(ind);
     if(F_plus_max ~= F_plus(end))
@@ -17,7 +17,7 @@ end
 while true
    l = l.nextStep();
    F_Tmax = F_plus_max / ratioF;
-   [t, F_plus] = calc(h, m, ms, Tmax, Nt);
+   [t, F_plus] = calc(0, h, m, ms, Tmax, Nt, n);
    if (F_plus(end) < F_Tmax)
        [tmp index] = min(abs(F_plus-F_Tmax));
        Tmax = t(index);

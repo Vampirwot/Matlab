@@ -1,11 +1,11 @@
-function[ma_teor, ms_teor] = calcMaMs(F, ma_exp, ms_exp, h, Tmax, Nt, maxMa, maxMs, dMa, dMs)
+function[ma_teor, ms_teor] = calcMaMs(F, ma_exp, ms_exp, h, Tmax, Nt, maxMa, maxMs, dMa, dMs, n)
 
 Ma = dMa/2:dMa:maxMa - dMa/2;
 Ms = dMs/2:dMs:maxMs - dMs/2;
 
 ma = Ma(1);
 ms = Ms(1);
-min = intmax;
+minQuadr = intmax;
 
 progress = ProgressBar(length(Ma)* length(Ms));
 quadr = zeros(length(Ma), length(Ms));
@@ -16,7 +16,7 @@ k = 0;
             k=k+1;
             progress = progress.print(k);
             M = Ma(i) + Ms(j);
-            [t, f] = calc(h, M, Ms(j), Tmax, Nt);
+            [t, f] = calc(0, h, M, Ms(j), Tmax, Nt, n);
            
             stdF = std(f - F);
             quadr_n(i, j) = sum((f - F).^2); 
@@ -26,8 +26,8 @@ k = 0;
                continue;
             end
            
-            if min > stdF%% quadr_n(i, j)%%stdF
-                min = stdF; %%quadr_n(i, j);%%stdF;
+            if minQuadr > stdF%% quadr_n(i, j)%%stdF
+                minQuadr = stdF; %%quadr_n(i, j);%%stdF;
                 ma = Ma(i);
                 ms = Ms(i);
             end
@@ -40,12 +40,16 @@ delta_ma = abs(ma_teor - ma_exp);
 delta_ms = abs(ms_teor - ms_exp);
 
 figure(2)
-surf(Ma/1000, Ms/1000, quadr_n)
+surf(Ma/1000, Ms/1000, quadr)
 title('Квадратичный функционал')
 xlabel('Коэффициент поглощения, 1/мм')
 ylabel('Коэффициент рассеяния, 1/мм')
 zlabel('Квадратичный функционал, Вт')
 grid on;
+
+disp(['Максимальное значение квадратичного функционала = ' num2str(max(max(quadr)))])
+disp(['Минимальное значение квадратичного функционала = ' num2str(min(min(quadr)))])
+disp(['Полученное значение квадратичного функционала = ' num2str(minQuadr)])
 
 vivod(ma_exp, ms_exp, ma_teor, ms_teor, delta_ma, delta_ms, dMa, dMs);
     

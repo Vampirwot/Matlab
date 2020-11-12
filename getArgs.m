@@ -1,4 +1,4 @@
-function [h,m_exp,ms_exp,ma_exp,Nma,Nms,Nt,ratioF,maxMa,maxMs,dMa,dMs] = getArgs()
+function [h,m_exp,ms_exp,ma_exp,Nma,Nms,Nt,ratioF,maxMa,maxMs,dMa,dMs,n] = getArgs()
 
 state = GetArgsState.Main;
 
@@ -6,6 +6,7 @@ state = GetArgsState.Main;
 
 h = 0.005;                  %Толщина слоя, м
 Nt = 1000;                  %Количество точек временного распределения
+n = 1.5;                    %Показатель преломления
 
 %% Параметры экспериментального временного распределения
 
@@ -16,8 +17,8 @@ ratioF = 100;               %Отношение Fmax / F(Tmax)
 
 %% Параметры определения характеристик рассеивающей среды
 
-Nma = 5;                   %Количество точек по ma
-Nms = 5;                   %Количество точек по ms
+Nma = 100;                   %Количество точек по ma
+Nms = 100;                   %Количество точек по ms
 
 maxMa = 3*ma_exp;           %Максимальное ma
 maxMs = 3*ms_exp;           %%Максимальное ms
@@ -25,6 +26,9 @@ maxMs = 3*ms_exp;           %%Максимальное ms
 % Размер ячейки
 dMa = maxMa/Nma;            
 dMs = maxMs/Nms;
+
+disp('Параметры по умолчанию'); 
+ishod(h, m_exp, ms_exp, ma_exp, Nma, Nms, Nt, ratioF, maxMa, maxMs, dMa, dMs, n); 
 
     while(state ~= GetArgsState.End)
         switch(state)
@@ -46,7 +50,8 @@ dMs = maxMs/Nms;
                 disp(['4) Количество точек для ms: ' num2str(Nms)]);
                 disp(['5) Количество точек для t: ' num2str(Nt)]);
                 disp(['6) Отношение Fmax/F(Tmax): ' num2str(ratioF)]);
-                disp('7) Готово');
+                disp(['7) Показатель преломления n: ' num2str(n)]);
+                disp('8) Готово');
                 choise = input('');
                 if(choise == 1)
                     state = GetArgsState.Change_H;
@@ -59,9 +64,11 @@ dMs = maxMs/Nms;
                 elseif(choise == 5)
                     state = GetArgsState.Change_Nt;
                 elseif(choise == 6)
-                    state = GetArgsState.Change_ratioF;    
+                    state = GetArgsState.Change_ratioF;
                 elseif(choise == 7)
-                    state = GetArgsState.End;
+                    state = GetArgsState.Change_N;
+                elseif(choise == 8)
+                    state = GetArgsState.Print_Table;
                 end
             case GetArgsState.Change_H
                 disp('Введите h в мм');
@@ -93,8 +100,15 @@ dMs = maxMs/Nms;
              case GetArgsState.Change_ratioF
                 disp('Введите отношение Fmax/F(Tmax)');
                 ratioF = input('');
-                state = GetArgsState.Change_Default_Settings;   
+                state = GetArgsState.Change_Default_Settings;
+             case GetArgsState.Change_N
+                disp('Введите показатель преломления');
+                n = input('');
+                state = GetArgsState.Change_Default_Settings;
+             case GetArgsState.Print_Table
+                disp('Исходные экспериментальные параметры'); 
+                ishod(h, m_exp, ms_exp, ma_exp, Nma, Nms, Nt, ratioF, maxMa, maxMs, dMa, dMs, n);
+                state = GetArgsState.End;
         end
-    end
-ishod(h, m_exp, ms_exp, ma_exp, Nma, Nms, Nt, ratioF, maxMa, maxMs, dMa, dMs); 
+    end 
 end
