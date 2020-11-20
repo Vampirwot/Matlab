@@ -72,16 +72,25 @@ ishod(h, m_exp, ms_exp, ma_exp, Nma, Nms, Nt, ratioF, maxMa, maxMs, dMa, dMs, n)
                 end
             case GetArgsState.Change_H
                 disp('¬ведите h в мм');
-                temp = input('');
-                if(checkCorrSign(temp) && checkNumber(temp))
-                    h = temp / 1e3;
-                    state = GetArgsState.Change_Default_Settings; 
+                [num, isUNumber] = inputUNumber();
+                if(~isUNumber)
+                    continue
                 end
+                h = num / 1e3;
+                state = GetArgsState.Change_Default_Settings; 
              case GetArgsState.Change_Ms_Ma
                 disp('¬ведите ms в 1/мм');
-                ms_exp = input('') * 1e3;
+                [num, isUNumber] = inputUNumber();
+                if(~isUNumber)
+                    continue
+                end
+                ms_exp = num * 1e3;
                 disp('¬ведите ma в 1/мм');
-                ma_exp = input('') * 1e3;
+                [num, isUNumber] = inputUNumber();
+                if(~isUNumber)
+                    continue
+                end
+                ma_exp = num * 1e3;
                 m_exp = ms_exp + ma_exp;
                 maxMa = 3*ma_exp;    
                 maxMs = 3*ms_exp;           
@@ -90,23 +99,43 @@ ishod(h, m_exp, ms_exp, ma_exp, Nma, Nms, Nt, ratioF, maxMa, maxMs, dMa, dMs, n)
                 state = GetArgsState.Change_Default_Settings;
              case GetArgsState.Change_Nms
                 disp('¬ведите количество точек дл€ расчета ms');
-                Nms = input('');
+                [num, isUInt] = inputUInt();
+                if(~isUInt)
+                    continue
+                end
+                Nms = num;
                 state = GetArgsState.Change_Default_Settings;
              case GetArgsState.Change_Nma
                 disp('¬ведите количество точек дл€ расчета ma');
-                Nma = input('');
+                [num, isUInt] = inputUInt();
+                if(~isUInt)
+                    continue
+                end
+                Nma = num;
                 state = GetArgsState.Change_Default_Settings;
              case GetArgsState.Change_Nt
                 disp('¬ведите количество точек дл€ расчета t');
-                Nt = input('');
+                [num, isUInt] = inputUInt();
+                if(~isUInt)
+                    continue
+                end
+                Nt = num;
                 state = GetArgsState.Change_Default_Settings;
              case GetArgsState.Change_ratioF
                 disp('¬ведите отношение Fmax/F(Tmax)');
-                ratioF = input('');
+                [num, isUInt] = inputUInt();
+                if(~isUInt)
+                    continue
+                end
+                ratioF = num;
                 state = GetArgsState.Change_Default_Settings;
              case GetArgsState.Change_N
                 disp('¬ведите показатель преломлени€');
-                n = input('');
+                [num, isUNumber] = inputUNumber();
+                if(~isUNumber)
+                    continue
+                end
+                n = num;
                 state = GetArgsState.Change_Default_Settings;
              case GetArgsState.Print_Table
                 disp('»сходные экспериментальные параметры'); 
@@ -115,31 +144,44 @@ ishod(h, m_exp, ms_exp, ma_exp, Nma, Nms, Nt, ratioF, maxMa, maxMs, dMa, dMs, n)
         end
     end 
     
-    function [isCorrSign] = checkCorrSign(num)
-        if(num < 0)
-           disp('ќшибка: ¬ведено отрицательное число');
-           isCorrSign = false;
-        end
-        isCorrSign = true;
+    function [num, isUInt] = inputUInt()
+       
+            num = str2num(input('','s'));
+            
+            if(isempty(num))
+                disp('ќшибка: ¬ведено не число')
+                isUInt = false;
+                return
+            end
+            
+            if(int32(num) < num)
+               disp('ќшибка: ¬ведено дробное число')
+               isUInt = false;
+               return
+            end
+            
+            if(num < 0)
+               disp('ќшибка: ¬ведено отрицательное число')
+               isUInt = false;
+               return
+            end 
+            isUInt = true;
     end
 
-    function [isDouble] = checkDouble(num)
-       if(int32(num) < num)
-           disp('ќшибка: ¬ведено дробное число')
-           isDouble = false;
-       end
-       isDouble = true;
-    end
-
-    function [isNumber] = checkNumber(num)
-       if(~isnumeric(num))
-           disp('ќшибка: ¬ведено не число')
-           isNumber = false;
-       end
-       isNumber = true;
-    end
-
-    function [num] = inputUInt()
-        %temp = 
+    function [num, isUNumber] = inputUNumber()
+        
+            num = str2num(input('','s'));
+            if(isempty(num))
+                disp('ќшибка: ¬ведено не число')
+                isUNumber = false;
+                return
+            end
+            
+            if(num < 0)
+               disp('ќшибка: ¬ведено отрицательное число')
+               isUNumber = false;
+               return
+            end
+            isUNumber = true; 
     end
 end
