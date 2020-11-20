@@ -32,5 +32,4 @@ end
 
 % F0 = u0*m_exp*v*dirac(m_exp*v*t0-m_exp*(zeta - zeta0))*exp(-m_exp*(zeta - zeta0));
 F0 = u0*m_exp*v*exp(-m_exp*(zeta - zeta0))/dt;
-
 end
