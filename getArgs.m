@@ -17,8 +17,8 @@ ratioF = 100;               %Отношение Fmax / F(Tmax)
 
 %% Параметры определения характеристик рассеивающей среды
 
-Nma = 100;                   %Количество точек по ma
-Nms = 100;                   %Количество точек по ms
+Nma = 10;                   %Количество точек по ma
+Nms = 10;                   %Количество точек по ms
 
 maxMa = 3*ma_exp;           %Максимальное ma
 maxMs = 3*ms_exp;           %%Максимальное ms
@@ -46,11 +46,11 @@ ishod(h, m_exp, ms_exp, ma_exp, Nma, Nms, Nt, ratioF, maxMa, maxMs, dMa, dMs, n)
                 disp('Введите номер пункта');
                 disp(['1) Изменить h: ' num2str(h * 1e3, 2) ' мм']);
                 disp(['2) Изменить ms: ' num2str(ms_exp / 1e3) ' 1/мм и ma: ' num2str(ma_exp / 1e3) ' 1/мм']);
-                disp(['3) Количество точек для ma: ' num2str(Nma)]);
-                disp(['4) Количество точек для ms: ' num2str(Nms)]);
-                disp(['5) Количество точек для t: ' num2str(Nt)]);
-                disp(['6) Отношение Fmax/F(Tmax): ' num2str(ratioF)]);
-                disp(['7) Показатель преломления n: ' num2str(n)]);
+                disp(['3) Изменить количество точек для ma: ' num2str(Nma)]);
+                disp(['4) Изменить количество точек для ms: ' num2str(Nms)]);
+                disp(['5) Изменить количество точек для t: ' num2str(Nt)]);
+                disp(['6) Изменить отношение Fmax/F(Tmax): ' num2str(ratioF)]);
+                disp(['7) Изменить показатель преломления n: ' num2str(n)]);
                 disp('8) Готово');
                 choise = input('');
                 if(choise == 1)
@@ -72,8 +72,11 @@ ishod(h, m_exp, ms_exp, ma_exp, Nma, Nms, Nt, ratioF, maxMa, maxMs, dMa, dMs, n)
                 end
             case GetArgsState.Change_H
                 disp('Введите h в мм');
-                h = input('') / 1e3;
-                state = GetArgsState.Change_Default_Settings; 
+                temp = input('');
+                if(checkCorrSign(temp) && checkNumber(temp))
+                    h = temp / 1e3;
+                    state = GetArgsState.Change_Default_Settings; 
+                end
              case GetArgsState.Change_Ms_Ma
                 disp('Введите ms в 1/мм');
                 ms_exp = input('') * 1e3;
@@ -111,4 +114,32 @@ ishod(h, m_exp, ms_exp, ma_exp, Nma, Nms, Nt, ratioF, maxMa, maxMs, dMa, dMs, n)
                 state = GetArgsState.End;
         end
     end 
+    
+    function [isCorrSign] = checkCorrSign(num)
+        if(num < 0)
+           disp('Ошибка: Введено отрицательное число');
+           isCorrSign = false;
+        end
+        isCorrSign = true;
+    end
+
+    function [isDouble] = checkDouble(num)
+       if(int32(num) < num)
+           disp('Ошибка: Введено дробное число')
+           isDouble = false;
+       end
+       isDouble = true;
+    end
+
+    function [isNumber] = checkNumber(num)
+       if(~isnumeric(num))
+           disp('Ошибка: Введено не число')
+           isNumber = false;
+       end
+       isNumber = true;
+    end
+
+    function [num] = inputUInt()
+        %temp = 
+    end
 end

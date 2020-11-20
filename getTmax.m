@@ -28,9 +28,11 @@ end
 l.end();
 [F_plus_max, ind] = max(F_plus);
 T_peak = t(ind);
-disp(['T_peak = ' num2str(T_peak * 1e11, '%.2f') ' пс']);
+dt = t(2) - t(1);
+disp(['T_peak = ' num2str(T_peak * 1e12, '%.2f') ' пс']);
 disp(['Fmax = ' num2str(F_plus_max, '%.2f') ' Вт']);
-disp(['Tmax = ' num2str(Tmax * 1e11, '%.2f') ' пс']);
+disp(['dt = ' num2str(dt * 1e12, '%.2f') ' пс']);
+disp(['Tmax = ' num2str(Tmax * 1e12, '%.2f') ' пс']);
 disp(['F(Tmax) = ' num2str(F_plus(index), '%.2f') ' Вт']);
 disp(['Фактическое отношение Fmax/F(Tmax) = ' num2str(F_plus_max/F_plus(index), '%.2f')]);
 disp(' ');

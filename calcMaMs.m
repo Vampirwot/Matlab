@@ -29,7 +29,7 @@ k = 0;
             if minQuadr > stdF%% quadr_n(i, j)%%stdF
                 minQuadr = stdF; %%quadr_n(i, j);%%stdF;
                 ma = Ma(i);
-                ms = Ms(i);
+                ms = Ms(j);
             end
         end
     end
@@ -39,13 +39,22 @@ k = 0;
 delta_ma = abs(ma_teor - ma_exp);
 delta_ms = abs(ms_teor - ms_exp);
 
-figure(2)
+figure()
 surf(Ma/1000, Ms/1000, quadr)
 title('Квадратичный функционал')
 xlabel('Коэффициент поглощения, 1/мм')
 ylabel('Коэффициент рассеяния, 1/мм')
-zlabel('Квадратичный функционал, Вт')
+zlabel('Квадратичный функционал, Дж*с')
 grid on;
+
+figure ()
+surf(Ma/1000, Ms/1000, 1./quadr)
+title('*Квадратичный функционал')
+xlabel('Коэффициент поглощения, 1/мм')
+ylabel('Коэффициент рассеяния, 1/мм')
+zlabel('*Квадратичный функционал, Дж*с')
+grid on;
+
 
 disp(['Максимальное значение квадратичного функционала = ' num2str(max(max(quadr)))])
 disp(['Минимальное значение квадратичного функционала = ' num2str(min(min(quadr)))])
