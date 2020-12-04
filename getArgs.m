@@ -104,6 +104,7 @@ ishod(h, m_exp, ms_exp, ma_exp, Nma, Nms, Nt, ratioF, maxMa, maxMs, dMa, dMs, n)
                     continue
                 end
                 Nms = num;
+                dMs = maxMs/Nms;
                 state = GetArgsState.Change_Default_Settings;
              case GetArgsState.Change_Nma
                 disp('¬ведите количество точек дл€ расчета ma');
@@ -112,6 +113,7 @@ ishod(h, m_exp, ms_exp, ma_exp, Nma, Nms, Nt, ratioF, maxMa, maxMs, dMa, dMs, n)
                     continue
                 end
                 Nma = num;
+                dMa = maxMa/Nma;
                 state = GetArgsState.Change_Default_Settings;
              case GetArgsState.Change_Nt
                 disp('¬ведите количество точек дл€ расчета t');

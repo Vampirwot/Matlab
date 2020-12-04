@@ -1,4 +1,4 @@
-function[t, F, t0, F0, indleft, indright, dt] = calc(zeta0, zeta, m_exp, ms_exp, Tmax, Nt, n)
+function[t, F, t0, F0, dt] = calc(zeta0, zeta, m_exp, ms_exp, Tmax, Nt, n)
 
 %% Постоянные
 
