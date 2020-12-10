@@ -51,7 +51,11 @@ ishod(h, m_exp, ms_exp, ma_exp, Nma, Nms, Nt, ratioF, maxMa, maxMs, dMa, dMs, n)
                 disp(['6) Изменить отношение Fmax/F(Tmax): ' num2str(ratioF)]);
                 disp(['7) Изменить показатель преломления n: ' num2str(n)]);
                 disp('8) Конец ввода');
-                choise = input('Введите номер пункта: ');
+                disp('Введите номер пункта: ');
+                [choise, isUNumber] = inputUNumber();
+                if(~isUNumber)
+                    continue
+                end
                 if(choise == 1)
                     state = GetArgsState.Change_H;
                 elseif(choise == 2)
