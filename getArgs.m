@@ -43,7 +43,6 @@ ishod(h, m_exp, ms_exp, ma_exp, Nma, Nms, Nt, ratioF, maxMa, maxMs, dMa, dMs, n)
                     disp('Ошибка ввода. Попробуйте еще раз.');
                 end
             case GetArgsState.Change_Default_Settings
-                disp('Введите номер пункта');
                 disp(['1) Изменить h: ' num2str(h * 1e3, 2) ' мм']);
                 disp(['2) Изменить ms: ' num2str(ms_exp / 1e3) ' 1/мм и ma: ' num2str(ma_exp / 1e3) ' 1/мм']);
                 disp(['3) Изменить количество точек для ma: ' num2str(Nma)]);
@@ -51,8 +50,12 @@ ishod(h, m_exp, ms_exp, ma_exp, Nma, Nms, Nt, ratioF, maxMa, maxMs, dMa, dMs, n)
                 disp(['5) Изменить количество точек для t: ' num2str(Nt)]);
                 disp(['6) Изменить отношение Fmax/F(Tmax): ' num2str(ratioF)]);
                 disp(['7) Изменить показатель преломления n: ' num2str(n)]);
-                disp('8) Готово');
-                choise = input('');
+                disp('8) Конец ввода');
+                disp('Введите номер пункта: ');
+                [choise, isUNumber] = inputUNumber();
+                if(~isUNumber)
+                    continue
+                end
                 if(choise == 1)
                     state = GetArgsState.Change_H;
                 elseif(choise == 2)
@@ -69,6 +72,8 @@ ishod(h, m_exp, ms_exp, ma_exp, Nma, Nms, Nt, ratioF, maxMa, maxMs, dMa, dMs, n)
                     state = GetArgsState.Change_N;
                 elseif(choise == 8)
                     state = GetArgsState.Print_Table;
+                else
+                    disp('Ошибка ввода. Попробуйте еще раз.');
                 end
             case GetArgsState.Change_H
                 disp('Введите h в мм');
@@ -166,6 +171,12 @@ ishod(h, m_exp, ms_exp, ma_exp, Nma, Nms, Nt, ratioF, maxMa, maxMs, dMa, dMs, n)
                disp('Ошибка: Введено отрицательное число')
                isUInt = false;
                return
+            end
+            
+            if(num == 0)
+               disp('Ошибка: Введено неверное число')
+               isUInt = false;
+               return
             end 
             isUInt = true;
     end
@@ -184,6 +195,12 @@ ishod(h, m_exp, ms_exp, ma_exp, Nma, Nms, Nt, ratioF, maxMa, maxMs, dMa, dMs, n)
                isUNumber = false;
                return
             end
+            
+            if(num == 0)
+               disp('Ошибка: Введено неверное число')
+               isUNumber = false;
+               return
+            end 
             isUNumber = true; 
     end
 end
