@@ -17,8 +17,8 @@ ratioF = 100;               %Отношение Fmax / F(Tmax)
 
 %% Параметры определения характеристик рассеивающей среды
 
-Nma = 100;                   %Количество точек по ma
-Nms = 100;                   %Количество точек по ms
+Nma = 50;                   %Количество точек по ma
+Nms = 50;                   %Количество точек по ms
 
 maxMa = 3*ma_exp;           %Максимальное ma
 maxMs = 3*ms_exp;           %%Максимальное ms
@@ -52,8 +52,8 @@ ishod(h, m_exp, ms_exp, ma_exp, Nma, Nms, Nt, ratioF, maxMa, maxMs, dMa, dMs, n)
                 disp(['7) Изменить показатель преломления n: ' num2str(n)]);
                 disp('8) Конец ввода');
                 disp('Введите номер пункта: ');
-                [choise, isUNumber] = inputUNumber();
-                if(~isUNumber)
+                [choise, isChoise] = inputChoise();
+                if(~isChoise)
                     continue
                 end
                 if(choise == 1)
@@ -70,7 +70,7 @@ ishod(h, m_exp, ms_exp, ma_exp, Nma, Nms, Nt, ratioF, maxMa, maxMs, dMa, dMs, n)
                     state = GetArgsState.Change_ratioF;
                 elseif(choise == 7)
                     state = GetArgsState.Change_N;
-                elseif(choise == 8)
+                elseif(isempty(choise) || choise == 8)
                     state = GetArgsState.Print_Table;
                 else
                     disp('Ошибка ввода. Попробуйте еще раз.');
@@ -203,4 +203,28 @@ ishod(h, m_exp, ms_exp, ma_exp, Nma, Nms, Nt, ratioF, maxMa, maxMs, dMa, dMs, n)
             end 
             isUNumber = true; 
     end
+
+     function [num, isChoise] = inputChoise()
+
+                numStr = input('','s');
+                if(strlength(numStr) == 0)
+                   isChoise = true;
+                   num = [];
+                   return
+                end
+                num = str2num(numStr);  
+                if(num < 0)
+                   disp('Ошибка: Введено отрицательное число')
+                   isChoise = false;
+                   return
+                end
+
+                if(isempty(num))
+                disp('Ошибка: Введено не число')
+                isChoise = false;
+                return
+                end
+        
+                isChoise = true; 
+        end
 end
