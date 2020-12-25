@@ -40,11 +40,7 @@ title({ 'Экспериментальное временное распределение импульса излучения' ; 'после 
 xlabel('Время, пс');
 ylabel('Интенсивность излучения, Вт');
 legend(F0_legend,'Рассеянный компонент')
-if (F0 / max(F) > 1)
-    axis([0 max(t * ps) 0 F0 * 10])
-else
-    axis([0 max(t * ps) 0 F_max * 10])
-end
+axis([0 max(t * ps) 0 max(F0,F_max) * 10])
 
 leftarrow = text(t0*ps, 1, '\leftarrow');
 leftarrow.Clipping= 'on';
