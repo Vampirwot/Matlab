@@ -3,6 +3,8 @@ clear all
 close all
 warning('off','all')
 
+ps = 1e12;
+
 disp('======================================================================================================');
 disp(' ');
 
@@ -27,27 +29,27 @@ disp(['Полная энергия временного распределения = ' num2str(sum(F)*dt) ' Дж']);
 
 f = figure();
 subplot(2, 1, 1)
-semilogy(t * 1e12, F, 'r', [t0*1e12, t0*1e12], [1, F0], 'k');
-axis([0 max(t*1e12) 0 F0])
+semilogy(t * ps, F, 'r', [t0*ps, t0*ps], [1, F0], 'k');
+axis([0 max(t*ps) 0 F0])
 title({ 'Экспериментальное временное распределение импульса излучения' ; 'после прохождения однородного рассеивающего слоя,'; ['дискретизация по времени ', num2str(dt * 1e12), ' пс, t_0 =', num2str(t0 * 1e12), ' пс']});
 xlabel('Время, пс');
 ylabel('Интенсивность излучения, Вт');
 grid on;
-leftarrow = text(t0*1e12, 1, '\leftarrow');
+leftarrow = text(t0*ps, 1, '\leftarrow');
 leftarrow.Clipping= 'on';
 leftarrow.Rotation=45;
 text_t0 = text(leftarrow.Extent(1)+leftarrow.Extent(3),leftarrow.Extent(2)+leftarrow.Extent(4),"t_0");
 text_t0.Clipping = 'on';
 
 subplot(2, 1, 2)
-p = plot(t * 1e12, F, 'r', [t0*1e12, t0*1e12], [0, F0], 'k');
-axis([0 max(t*1e12) 0 F0])
+p = plot(t * ps, F, 'r', [t0*ps, t0*ps], [0, F0], 'k');
+axis([0 max(t*ps) 0 F0])
 %message = text(t0*1e12, F0/2, '\leftarrow t_0');
 title({ 'Экспериментальное временное распределение импульса излучения' ; 'после прохождения однородного рассеивающего слоя,'; ['дискретизация по времени ', num2str(dt * 1e12), ' пс, t_0 =', num2str(t0 * 1e12), ' пс']});
 xlabel('Время, пс');
 ylabel('Интенсивность излучения, Вт');
 grid on;
-leftarrow1 = text(t0*1e12, 0, '\leftarrow');
+leftarrow1 = text(t0*ps, 0, '\leftarrow');
 leftarrow1.Clipping= 'on';
 leftarrow1.Rotation=45;
 text_t01 = text(leftarrow1.Extent(1)+leftarrow1.Extent(3),leftarrow1.Extent(2)+leftarrow1.Extent(4),"t_0");
@@ -71,33 +73,33 @@ m_teor = ma_teor + ms_teor;
 
 f1 = figure();
 subplot(2, 1, 1)
-semilogy(t * 1e12, F_exp, 'r', t * 1e12, F, 'b');
+semilogy(t * ps, F_exp, 'r', t * ps, F, 'b');
 hold on;
 grid on;
-semilogy([t0*1e12, t0*1e12], [1, F0], 'k', 'LineWidth', 2);
-axis([0 max(t * 1e12) 0 F0])
+semilogy([t0*ps, t0*ps], [1, F0], 'k', 'LineWidth', 2);
+axis([0 max(t * ps) 0 F0])
 title({'Полученное теоретическое и экспериментальное временные' ; ' распределения импульса излучения'; ['t_0 = ', num2str(t0 * 1e12), ' пс']});
 legend('Экспериментальное распределение','Теоретическое распределение', 'Баллистический компонент')
 xlabel('Время, пс');
 ylabel('Интенсивность излучения, Вт');
 % text(t0*1e12, sqrt(F0), '\leftarrow t_0');
-leftarrow2 = text(t0*1e12, 1, '\leftarrow');
+leftarrow2 = text(t0*ps, 1, '\leftarrow');
 leftarrow2.Clipping= 'on';
 leftarrow2.Rotation=45;
 text_t02 = text(leftarrow2.Extent(1)+leftarrow2.Extent(3),leftarrow2.Extent(2)+leftarrow2.Extent(4),"t_0");
 text_t02.Clipping = 'on';
 
 subplot(2, 1, 2)
-plot(t * 1e12, F_exp, 'r', t * 1e12, F, 'b');
+plot(t * ps, F_exp, 'r', t * ps, F, 'b');
 hold on;
-plot([t0*1e12, t0*1e12], [0, F0], 'k', 'LineWidth', 2);
+plot([t0*ps, t0*ps], [0, F0], 'k', 'LineWidth', 2);
 % text(t0*1e12, F0/2, '\leftarrow t_0')
 title({'Полученное теоретическое и экспериментальное временные' ; ' распределения импульса излучения'; ['t_0 = ', num2str(t0 * 1e12), ' пс']});
 legend('Экспериментальное распределение','Теоретическое распределение', 'Баллистический компонент')
 xlabel('Время, пс');
 ylabel('Интенсивность излучения, Вт');
 grid on;
-leftarrow3 = text(t0*1e12, 0, '\leftarrow');
+leftarrow3 = text(t0*ps, 0, '\leftarrow');
 leftarrow3.Clipping= 'on';
 leftarrow3.Rotation=45;
 text_t03 = text(leftarrow3.Extent(1)+leftarrow3.Extent(3),leftarrow3.Extent(2)+leftarrow3.Extent(4),"t_0");
