@@ -27,26 +27,24 @@ disp('--------------------------------------------------------------------------
 [t, F, t0, F0, dt] = calc(0, h, m_exp, ms_exp, Tmax, Nt, n);
 disp(['Полная энергия временного распределения = ' num2str(sum(F)*dt) ' Дж']);
 
-F0_min_log = max(F) * 10;
-F0_min = max(F) * 1.3;
+F_max = max(F);
 
 f = figure();
 subplot(2, 1, 1)
-if (F0 / max(F) > 1)
-    F0_legend = sprintf('Баллистический компонент F0: %.2e Вт', F0);
-    semilogy([t0*ps, t0*ps], [1, F0_min_log], 'k');
-    legend(F0_legend)
-    axis([0 max(t * ps) 0 max(F0_min_log * 10)])
-else
-    semilogy([t0*ps, t0*ps], [1, F0], 'k');
-    axis([0 max(t * ps) 0 max(F * 10)])
-end
+F0_legend = sprintf('Баллистический компонент F0: %.2e Вт', F0);
+semilogy([t0*ps, t0*ps], [1, F0], 'k');
 hold on;
 grid on;
 semilogy(t * ps, F, 'r');
 title({ 'Экспериментальное временное распределение импульса излучения' ; 'после прохождения однородного рассеивающего слоя,'; ['дискретизация по времени ', num2str(dt * 1e12), ' пс, t_0 =', num2str(t0 * 1e12), ' пс']});
 xlabel('Время, пс');
 ylabel('Интенсивность излучения, Вт');
+legend(F0_legend,'Рассеянный компонент')
+if (F0 / max(F) > 1)
+    axis([0 max(t * ps) 0 F0 * 10])
+else
+    axis([0 max(t * ps) 0 F_max * 10])
+end
 
 leftarrow = text(t0*ps, 1, '\leftarrow');
 leftarrow.Clipping= 'on';
@@ -56,13 +54,11 @@ text_t0.Clipping = 'on';
 
 subplot(2, 1, 2)
 if (F0 / max(F) > 1)
-    F0_legend = sprintf('Баллистический компонент F0: %.2e Вт', F0);
-    plot([t0*ps, t0*ps], [0, F0_min], 'k');
-    legend(F0_legend)
-    axis([0 max(t * ps) 0 max(F0_min + (F0_min * 0.1))])
+    plot([t0*ps, t0*ps], [0, F_max * 1.1], 'k');
+    axis([0 max(t * ps) 0 F_max * 1.3])
 else
-    semilogy([t0*ps, t0*ps], [0, F0], 'k');
-    axis([0 max(t * ps) 0 max(F + (F * 0.1))])
+    plot([t0*ps, t0*ps], [0, F_max * 0.9], 'k');
+    axis([0 max(t * ps) 0 F_max * 1.1])
 end
 hold on;
 grid on;
@@ -70,7 +66,7 @@ plot(t * ps, F, 'r');
 title({ 'Экспериментальное временное распределение импульса излучения' ; 'после прохождения однородного рассеивающего слоя,'; ['дискретизация по времени ', num2str(dt * 1e12), ' пс, t_0 =', num2str(t0 * 1e12), ' пс']});
 xlabel('Время, пс');
 ylabel('Интенсивность излучения, Вт');
-
+legend(F0_legend,'Рассеянный компонент')
 leftarrow1 = text(t0*ps, 0, '\leftarrow');
 leftarrow1.Clipping= 'on';
 leftarrow1.Rotation=45;
@@ -91,26 +87,22 @@ disp('--------------------------------------------------------------------------
 
 m_teor = ma_teor + ms_teor;
 
-[t, F_exp, t0, F0] = calc(0, h, m_teor, ms_teor, Tmax, Nt, n); 
+[t, F_teor, t0, F0] = calc(0, h, m_teor, ms_teor, Tmax, Nt, n); 
 
+F_teor_max = max(F_teor);
 f1 = figure();
 subplot(2, 1, 1)
-semilogy(t * ps, F_exp, 'r', t * ps, F, 'b');
+semilogy(t * ps, F, 'b', t * ps, F_teor, 'r');
 hold on;
 grid on;
-if (F0 / max(F) > 1)
-    F0_text = sprintf('Баллистический компонент F0: %.2e Вт', F0);
-    semilogy([t0*ps, t0*ps], [1, F0_min_log], 'k');
-    legend('Экспериментальное распределение','Теоретическое распределение', F0_text)
-    axis([0 max(t * ps) 0 max(F0_min_log * 10)])
-else
-    semilogy([t0*ps, t0*ps], [1, F0], 'k');
-    axis([0 max(t * ps) 0 max(F * 10)])
-    legend('Экспериментальное распределение','Теоретическое распределение', 'Баллистический компонент')
-end
+semilogy([t0*ps, t0*ps], [1, F0], 'k');
+axis([0 max(t * ps) 0 max(F0,max(F_teor_max,F_max)) * 10])
+
 title({'Полученное теоретическое и экспериментальное временные' ; ' распределения импульса излучения'; ['t_0 = ', num2str(t0 * ps), ' пс']});
 xlabel('Время, пс');
 ylabel('Интенсивность излучения, Вт');
+F0_text = sprintf('Баллистический компонент F0: %.2e Вт', F0);
+legend('Экспериментальное распределение','Теоретическое распределение', F0_text)
 
 leftarrow2 = text(t0*ps, 1, '\leftarrow');
 leftarrow2.Clipping= 'on';
@@ -119,22 +111,21 @@ text_t02 = text(leftarrow2.Extent(1)+leftarrow2.Extent(3),leftarrow2.Extent(2)+l
 text_t02.Clipping = 'on';
 
 subplot(2, 1, 2)
-plot(t * ps, F_exp, 'r', t * ps, F, 'b');
+plot(t * ps, F, 'b', t * ps, F_teor, 'r');
 hold on;
 grid on;
-if (F0 / max(F) > 1)
-    F0_text = sprintf('Баллистический компонент F0: %.2e Вт', F0);
-    plot([t0*ps, t0*ps], [0, F0_min], 'k');
-    legend('Экспериментальное распределение','Теоретическое распределение', F0_text)
-    axis([0 max(t * ps) 0 max(F0_min + (F0_min * 0.1))])
+if (F0 / max(F_teor) > 1)
+    plot([t0*ps, t0*ps], [0, F_teor_max * 1.1], 'k');
+    axis([0 max(t * ps) 0 max(F_teor_max, F_max) * 1.3])
 else
-    plot([t0*ps, t0*ps], [0, F0], 'k');
-    axis([0 max(t * ps) 0 max(F + (F * 0.1))])
-    legend('Экспериментальное распределение','Теоретическое распределение', 'Баллистический компонент')
+    plot([t0*ps, t0*ps], [0, F_teor_max * 0.9], 'k');
+    axis([0 max(t * ps) 0 max(F_teor_max, F_max) * 1.1])
+    
 end
 title({'Полученное теоретическое и экспериментальное временные' ; ' распределения импульса излучения'; ['t_0 = ', num2str(t0 * ps), ' пс']});
 xlabel('Время, пс');
 ylabel('Интенсивность излучения, Вт');
+legend('Экспериментальное распределение','Теоретическое распределение', F0_text)
 
 leftarrow3 = text(t0*ps, 0, '\leftarrow');
 leftarrow3.Clipping= 'on';
